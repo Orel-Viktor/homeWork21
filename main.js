@@ -24,7 +24,10 @@ const FindPost = function ({
     myForm.addEventListener("submit", (event) => {
         event.preventDefault();
         event.target.reset()
-        
+        postComments.innerText = ''
+        this.openCommentsBtn.removeAttribute("disabled", "disabled");
+        this.closeCommentsBtn ? this.closeCommentsBtn.remove() : this.closeCommentsBtn
+
     });
 
     this.checkID = () => {
@@ -44,6 +47,7 @@ const FindPost = function ({
                     postTitle.innerText = `Title: ` + data.map((elem) => elem.title);
                 })
         });
+
         this.openComments();
     };
     this.openComments = () => {
