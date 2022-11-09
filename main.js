@@ -80,7 +80,7 @@ const FindPost = function ({
 
   this.clearElements = () => {
     this.openCommentsBtn.removeAttribute("disabled", "disabled");
-      this.closeCommentsBtn.remove();
+    this.closeCommentsBtn.remove();
     this.userName.remove();
     this.userEmail.remove();
     this.userBody.remove();
