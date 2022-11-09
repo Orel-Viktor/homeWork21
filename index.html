@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <form action="#" id="form" class="js--form">
-        <input type="number"  name="number" placeholder="Введите ID" id="find-id" class="js--input-id" >
-        <button class="js--btn-send" >Send</button>
+      <input
+        type="number"
+        name="number"
+        placeholder="Введите ID"
+        id="find-id"
+        class="js--input-id"
+      />
+      <button class="js--btn-send">Send</button>
     </form>
-    <div class="js--user-id-post"></div>
-    <div class="js--id-post"></div>
-    <div class="js--title-post"></div>
-    <div class="js--body-post"></div>
-   
-    <script  src = "main.js"></script>
-</body>
+    <div class="js--info-post">
+      <div class="js--user-id-post"></div>
+      <div class="js--id-post"></div>
+      <div class="js--title-post"></div>
+      <div class="js--body-post"></div>
+      <div class="js--comments-post"></div>
+      <!-- <button class="js--open-comments"></button> -->
+    </div>
+    <script src="main.js"></script>
+  </body>
 </html>
