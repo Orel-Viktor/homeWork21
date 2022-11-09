@@ -24,7 +24,7 @@ const FindPost = function ({
   myForm.addEventListener("submit", (event) => {
     event.preventDefault();
     event.target.reset();
-    postComments.innerText = "";
+    postComments.innerHTML = "";
     this.openCommentsBtn.removeAttribute("disabled", "disabled");
     this.closeCommentsBtn
       ? this.closeCommentsBtn.remove()
@@ -39,32 +39,43 @@ const FindPost = function ({
   this.findId = function () {
     this.checkID();
     sendBtn.addEventListener("click", () => {
+      this.openCommentsBtn
+        ? this.openCommentsBtn.remove()
+        : this.openCommentsBtn;
       fetch(`https://jsonplaceholder.typicode.com/posts?id=${this.idValue}`)
         .then((response) => response.json())
         .then((data) => {
-          postUserId.innerText = `UserId: ` + data.map((elem) => elem.userId);
-          posId.innerText = `Id: ` + data.map((elem) => elem.id);
-          postBody.innerText = `Body: ` + data.map((elem) => elem.body);
-          postTitle.innerText = `Title: ` + data.map((elem) => elem.title);
+          const post = data[0];
+          if (!post) {
+            return;
+          }
+          postUserId.innerText = `UserId: ` + post.userId;
+          posId.innerText = `Id: ` + post.id;
+          postBody.innerText = `Body: ` + post.body;
+          postTitle.innerText = `Title: ` + post.title;
         });
+      this.openComments();
     });
-
-    this.openComments();
   };
+
   this.openComments = () => {
     this.openCommentsBtn = document.createElement("button");
     postInfo.appendChild(this.openCommentsBtn).innerText = "Open Comments";
     this.openCommentsBtn.addEventListener("click", () => {
       this.closeComment();
-      this.createCommentElements();
       fetch(
         `https://jsonplaceholder.typicode.com/post/${this.idValue}/comments`
       )
         .then((response) => response.json())
         .then((data) => {
-          this.userName.innerText = `Name: ` + data.map((elem) => elem.name);
-          this.userEmail.innerText = `Email: ` + data.map((elem) => elem.email);
-          this.userBody.innerText = `Body: ` + data.map((elem) => elem.body);
+          const comments = data.map((comment) => {
+            return `
+              <div>Name: ${comment.name}</div>
+              <div>Email: ${comment.email}</div>
+              <div>Comment: ${comment.body}</div>
+            `;
+          });
+          postComments.innerHTML = comments.join("");
         });
     });
   };
@@ -81,18 +92,7 @@ const FindPost = function ({
   this.clearElements = () => {
     this.openCommentsBtn.removeAttribute("disabled", "disabled");
     this.closeCommentsBtn.remove();
-    this.userName.remove();
-    this.userEmail.remove();
-    this.userBody.remove();
-  };
-
-  this.createCommentElements = () => {
-    this.userName = document.createElement("div");
-    this.userEmail = document.createElement("div");
-    this.userBody = document.createElement("div");
-    postComments.appendChild(this.userName);
-    postComments.appendChild(this.userEmail);
-    postComments.appendChild(this.userBody);
+    postComments.innerHTML = "";
   };
 };
 
