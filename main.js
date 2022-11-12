@@ -21,11 +21,13 @@ const FindPost = function ({
   const postComments = document.querySelector(commentsPost);
   const postInfo = document.querySelector(infoPost);
 
-  myForm.addEventListener("submit",  (event) => {
+  myForm.addEventListener("submit", (event) => {
     event.preventDefault();
     event.target.reset();
     postComments.innerHTML = "";
-    this.openCommentsBtn.removeAttribute("disabled", "disabled");
+    this.openCommentsBtn 
+    ? this.openCommentsBtn.removeAttribute("disabled", "disabled") 
+    : this.openCommentsBtn;
     this.closeCommentsBtn
       ? this.closeCommentsBtn.remove()
       : this.closeCommentsBtn;
@@ -36,23 +38,23 @@ const FindPost = function ({
       this.idValue = idInput.value;
     });
   };
-  this.findId =  function () {
+  this.findId = function () {
     this.checkID();
     sendBtn.addEventListener("click", async () => {
       this.openCommentsBtn
         ? this.openCommentsBtn.remove()
         : this.openCommentsBtn;
-     let response = await fetch(`https://jsonplaceholder.typicode.com/posts?id=${this.idValue}`)
-     let data = await response.json()
-          const post = data[0];
-          if (!post) {
-            return;
-          }
-          postUserId.innerText = `UserId: ` + post.userId;
-          posId.innerText = `Id: ` + post.id;
-          postBody.innerText = `Body: ` + post.body;
-          postTitle.innerText = `Title: ` + post.title;
-        
+      let response = await fetch(`https://jsonplaceholder.typicode.com/posts?id=${this.idValue}`)
+      let data = await response.json()
+      const post = data[0];
+      if (!post) {
+        return;
+      }
+      postUserId.innerText = `UserId: ` + post.userId;
+      posId.innerText = `Id: ` + post.id;
+      postBody.innerText = `Body: ` + post.body;
+      postTitle.innerText = `Title: ` + post.title;
+
       this.openComments();
     });
   };
@@ -60,20 +62,20 @@ const FindPost = function ({
   this.openComments = () => {
     this.openCommentsBtn = document.createElement("button");
     postInfo.appendChild(this.openCommentsBtn).innerText = "Open Comments";
-    this.openCommentsBtn.addEventListener("click",  async () => {
+    this.openCommentsBtn.addEventListener("click", async () => {
       this.closeComment();
-      
-      let response = await fetch( `https://jsonplaceholder.typicode.com/post/${this.idValue}/comments`)
+
+      let response = await fetch(`https://jsonplaceholder.typicode.com/post/${this.idValue}/comments`)
       let comment = await response.json()
-          const comments = data.map((comment) => {
-            return `
+      const comments = comment.map((comment) => {
+        return `
               <div>Name: ${comment.name}</div>
               <div>Email: ${comment.email}</div>
               <div>Comment: ${comment.body}</div>
             `;
-          });
-          postComments.innerHTML = comments.join("");
-        
+      });
+      postComments.innerHTML = comments.join("");
+
     });
   };
 
