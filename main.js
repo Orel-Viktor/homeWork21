@@ -38,6 +38,7 @@ const FindPost = function ({
       this.idValue = idInput.value;
     });
   };
+
   this.findId = function () {
     this.checkID();
     sendBtn.addEventListener("click", async () => {
@@ -64,7 +65,6 @@ const FindPost = function ({
     postInfo.appendChild(this.openCommentsBtn).innerText = "Open Comments";
     this.openCommentsBtn.addEventListener("click", async () => {
       this.closeComment();
-
       let response = await fetch(`https://jsonplaceholder.typicode.com/post/${this.idValue}/comments`)
       let comment = await response.json()
       const comments = comment.map((comment) => {
@@ -75,7 +75,6 @@ const FindPost = function ({
             `;
       });
       postComments.innerHTML = comments.join("");
-
     });
   };
 
